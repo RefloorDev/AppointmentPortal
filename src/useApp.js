@@ -119,24 +119,44 @@ export const useApp = () => {
   const capitalizeFirstLetter = (value) => {
     return value.charAt(0).toUpperCase() + value.slice(1);
   };
+  //
+  const getQueryParams = () => {
+    const params = new URLSearchParams(window.location.search);
+    const queryParams = {};
+    for (const [key, value] of params.entries()) {
+      queryParams[key] = value;
+    }
+    return queryParams;
+  };
+  //
 
   const createBooking = async () => {
+    const _QParams = getQueryParams();
+    console.log(_QParams);
+    _QParams.source = _QParams.source===undefined?q3:_QParams.source;
+    console.log(_QParams.source);
     setShowMsg(false);
     let UTMS = searchParams.get("utm_source");
     if (UTMS == null) {
       UTMS = "Scheduler";
     }
+    //
+    let UTM_campaign = searchParams.get("utm_campaign");
+    if (UTM_campaign == null) {
+      UTM_campaign = "";
+    }
     const currentUrl = window.location.href;
     const url = new URL(currentUrl);
     // Get the search parameters
     const paramsURL = new URLSearchParams(url.search);
-    const utmSource = paramsURL.get("utm_source");
+   
     const source = paramsURL.get("source");
+        
     //
-    let SourceParam = searchParams.get("source");
-    if (SourceParam == null) {
-      SourceParam = "";
-    }
+    // let SourceParam = searchParams.get("source");
+    // if (SourceParam == null) {
+    //   SourceParam = "";
+    // }
     //
     try {
       const prospectRequest = {
@@ -151,8 +171,7 @@ export const useApp = () => {
         homeowner: owner === "true",
         contact: spouse,
         notes: "Rooms Interested: " + q1 + ", Type of Flooring: " + q2,
-        utm_source: UTMS,
-        //source: source===null?q3:source
+        utm_source: UTMS
       };
       //
       //utm_source: utmSource===null?"":utmSource,
@@ -171,11 +190,13 @@ export const useApp = () => {
       */
       const response = await apiService.scheduleResourceProposeAppointment({
         xScheduleVendor: "refloor",
-        xScheduleEnvironment: "sandbox",
+        // xScheduleEnvironment: 'sandbox',
         xScheduleOrigin: "scheduler",
         prospectRequest,        
       },
-      {params: { source: source===null?q3:source }} );
+      {params:_QParams});
+      test
+      // {params: { source: source===null?q3:source, utm_source:UTMS }} );
       //
       // 400 Bad Request - Bad user request
       // 403 Forbidden - User does not have permissions
@@ -211,7 +232,7 @@ export const useApp = () => {
         const _timeSlots = response.data;
         console.log(_timeSlots);
 
-        navigate("/booking", { state: {"data":_appointment, "message":CommentsClient, "locDetails":_addr, "email":email, "fn":capitalizeFirstLetter(firstName), "ln":capitalizeFirstLetter(lastName)}});
+        navigate("/booking", { state: {"data":_appointment, "message":CommentsClient, "locDetails":_addr, "email":email, "fn":capitalizeFirstLetter(firstName), "ln":capitalizeFirstLetter(lastName), UTM_Campaign:UTM_campaign, _queryParams:_QParams}});
       }else{
         setshowuseAppModalMessage("Unknown Error - " + response.data.message);
         setshowuseAppModal(true);

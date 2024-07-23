@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <div className="body">
-      <Router basename="scheduler">
+      <Router>
         <Routes>
           <Route path="/booking" element={<Booking />} />
           <Route path="/" element={<App />} />

@@ -33,6 +33,8 @@ useState({
   const email = state?.email;
   const firstName = state?.fn;
   const lastName = state?.ln;
+  const UTM_Cam = state?.UTM_Campaign;
+  const _QueryParams = state?._queryParams;
   
   // const response = location.state;
   // const clientMessage = location.message;
@@ -117,7 +119,7 @@ useState({
         //
         const scheduleRequest = {
           xScheduleVendor: 'refloor',
-          xScheduleEnvironment: 'sandbox',
+          // xScheduleEnvironment: 'sandbox',
           xScheduleOrigin: 'scheduler',
           appointmentRequest: {
             id: response?.id,
@@ -145,7 +147,11 @@ useState({
         }
         console.log(scheduleRequest);
         console.log(apiservice)
-        const responseAppointment = await apiservice.scheduleResourceScheduleAppointment(scheduleRequest);
+        const responseAppointment = await apiservice.scheduleResourceScheduleAppointment(scheduleRequest
+          ,
+          {params:_QueryParams}
+          // {params: {utm_campaign:UTM_Cam }}
+        );
         setDataLoading(false);
         console.log(responseAppointment)        
         //catch the errors and success response and navigate back to main page on showing the data in the modal
