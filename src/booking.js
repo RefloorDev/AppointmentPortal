@@ -108,13 +108,10 @@ export const Booking = () => {
 
         {dataLoading ? <DataLoading /> : null}
 
-        <div style={{ display: resultBox ? "flex" : "none" }} className="modal">
+        {/* <div style={{ display: resultBox ? "flex" : "none" }} className="modal">
           <div className="modal-content" style={{ width: "500px" }}>
             <div className="col" style={{margin:5}}>
-              {/* <div className="row" style={{ textAlign: "center" }}>              
-              <div className="modal-text"><FcOk/>&nbsp;Appointment Scheduled:</div>
-              </div> */}
-              {/* <div style={{border: "2px solid black",padding:20}}> */}
+              
                 {resultMessage.message !== ""? (
                   <div className="row" style={{textAlign:"center"}}>
                   <div className="modal-text"><FcOk/>&nbsp;{resultMessage.message}</div>
@@ -144,6 +141,63 @@ export const Booking = () => {
                   </div>
                 ):null}
                
+               {resultMessage.message2 !== ""? (
+                <div className="row">
+                <div className="modal-text">&nbsp;{resultMessage.message2}</div>
+                </div>
+               ):null}
+              
+              <div style={{ textAlign: "center" }}>
+                  <button
+                    className="btn btn-success"
+                    style={{
+                      marginTop: 10,
+                      width: 50,
+                      height: 30,
+                    }}
+                    onClick={handleCloseModal}
+                  >
+                    OK
+                  </button>
+                </div>
+
+            </div>
+           
+          </div>
+        </div> */}
+
+        <div style={{ display: resultBox ? "flex" : "none" }} className="modal">
+          <div className="modal-content" style={{ width: "500px" }}>
+            <div className="col" style={{margin:5}}>
+              {/* <div className="row" style={{ textAlign: "center" }}>              
+              <div className="modal-text"><FcOk/>&nbsp;Appointment Scheduled:</div>
+              </div> */}
+              {/* <div style={{border: "2px solid black",padding:20}}> */}
+                {(resultMessage.message && resultMessage.name) !== ""? (
+                  <div className="row" style={{textAlign:"center"}}>
+                  <div className="modal-text"><FcOk/>&nbsp;{resultMessage.name+", "+resultMessage.message}</div>
+                  </div>
+                ):null}
+                {resultMessage.date_ !== ""? (
+                  <div className="row" style={{
+                        marginTop: 10
+                      }}>
+                  <div className="modal-text"><SlCalender />&nbsp;{resultMessage.date_}</div>
+                  </div>
+                ):null}
+
+                {resultMessage.time_ !== ""? (
+                  <div className="row">
+                  <div className="modal-text"><TfiTimer />&nbsp;{"at "+resultMessage.time_}</div>
+                  </div>
+                ):null}
+
+                {resultMessage.address !== ""? (
+                  <div className="row">
+                  <div className="modal-text"><IoLocationOutline />&nbsp;{"at "+resultMessage.address}</div>
+                  </div>
+                ):null}
+                
                {resultMessage.message2 !== ""? (
                 <div className="row">
                 <div className="modal-text">&nbsp;{resultMessage.message2}</div>

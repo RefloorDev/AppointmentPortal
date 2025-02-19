@@ -7,6 +7,7 @@ import { Country, State } from "country-state-city";
 import { getToken, startService } from "../src/common";
 import moment from "moment";
 //
+
 let apiServiceInstance = null;
 export const useApp = () => {
   //
@@ -36,7 +37,9 @@ export const useApp = () => {
   const [q2, setQ2] = useState("");
   const [q3, setQ3] = useState("");
   const [zip, setZip] = useState("");
-
+  const [homeType, setHomeType]  =useState("");
+  //
+  const [homeTypes, setHomeTypes]  =useState([]);
   const [showMsg, setShowMsg] = useState(false);
   const [USStates, setUSStates] = useState([]);
   const [statename, setStateName] = useState("");
@@ -50,7 +53,6 @@ export const useApp = () => {
     const countryCode = "US";
     const country = Country.getCountryByCode(countryCode);
     const states = State.getStatesOfCountry(country.isoCode);
-    console.log(states);
     setUSStates(states);
     setQ2("Luxury Vinyl (100% Waterproof)");
     setQ3("Television");
@@ -63,13 +65,11 @@ export const useApp = () => {
         if (token === "") {
           return;
         }
-        console.log(token);
         if (token) {
           const service = await startService(
             token,
             "https://refloor.logicdrop.cloud/endpoints/scheduler/api"
           );
-          console.log("Service initialized:", service);
           setAPIService(service); 
           apiServiceInstance = service;
           //
@@ -106,12 +106,41 @@ export const useApp = () => {
     };
     //
     initializeService();
+    //
+    setDataLoading(true);
+    //get the prodcut categories
+    try{
+      fetch(Urls.GET_GetHomeTypes)
+      .then((response) => response.json())
+      .then((data) => {
+        setDataLoading(false);
+        console.log(data);
+        if(data !== null){
+          const houseItem = data.find(item => item.valueName === "House");
+          
+          setHomeType(houseItem.valueName);
+          setHomeTypes(data);
+          return;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setDataLoading(false); 
+        setHomeType("Mobile Home");      
+      });
+    }catch(error){
+      console.log("Error in fetching product categories: ", error);
+    }
   }, [status, setShowMsg]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();
   const onSubmit = (event) => {
     setDataLoading(true);
+    //trusted forms
+    // console.log("TrustedForm Certificate URL:", trustedFormCert);
+    // console.log("TrustedForm Ping URL:", trustedFormPing);
+
     createBooking();
     event.preventDefault();
   };
@@ -132,9 +161,8 @@ export const useApp = () => {
 
   const createBooking = async () => {
     const _QParams = getQueryParams();
-    console.log(_QParams);
     _QParams.source = _QParams.source===undefined?q3:_QParams.source;
-    console.log(_QParams.source);
+    _QParams.homeType = homeType;
     setShowMsg(false);
     let UTMS = searchParams.get("utm_source");
     if (UTMS == null) {
@@ -188,6 +216,7 @@ export const useApp = () => {
       /*
   const { data, status } = await scheduleService.scheduleResourceScheduleAppointment(                     request,                     { params: { source: 'stuff' } }                 );
       */
+     
       const response = await apiService.scheduleResourceProposeAppointment({
         xScheduleVendor: "refloor",
         // xScheduleEnvironment: 'sandbox',
@@ -195,14 +224,12 @@ export const useApp = () => {
         prospectRequest,        
       },
       {params:_QParams});
-      test
       // {params: { source: source===null?q3:source, utm_source:UTMS }} );
       //
       // 400 Bad Request - Bad user request
       // 403 Forbidden - User does not have permissions
       // 409 Conflict - Appointment exists
       // 500 Internal Error - Exception in the API
-      console.log(response);
       setDataLoading(false);
       if (response.data.code === 400) {
         setshowuseAppModalMessage("Bad Request - " + response.data.message);
@@ -218,7 +245,7 @@ export const useApp = () => {
         //appointment exists, so it to the user
         const properties = response.data.properties;
         const selected_ = moment(properties.date).format("dddd, MMMM Do YYYY");
-        setResultMessage({name: properties.firstName+" "+properties.lastName, address: properties.street+", "+properties.city+", "+properties.state+" - "+properties.zip, email: email,time_: properties.time,date_:selected_, message: `It looks like you already have an appointment scheduled on ${selected_} at ${properties.timr}. If you need to change your appointment, please call or text us at 844-212-7942. Thank you!`, message2:""});
+        setResultMessage({name: properties.firstName+" "+properties.lastName, address: properties.street+", "+properties.city+", "+properties.state+" - "+properties.zip, email: email,time_: properties.time,date_:selected_, message: `It looks like you already have an appointment scheduled on ${selected_} at ${properties.time}. If you need to change your appointment, please call or text us at 844-212-7942. Thank you!`, message2:""});
         setResultBox(true);
       }
       else if (response.data.code === 500) {
@@ -228,10 +255,6 @@ export const useApp = () => {
       else if (response?.status && response.status === 200) {
         //get the existing appointment data and available slots
         const _appointment = response.data;
-        console.log(_appointment);
-        const _timeSlots = response.data;
-        console.log(_timeSlots);
-
         navigate("/booking", { state: {"data":_appointment, "message":CommentsClient, "locDetails":_addr, "email":email, "fn":capitalizeFirstLetter(firstName), "ln":capitalizeFirstLetter(lastName), UTM_Campaign:UTM_campaign, _queryParams:_QParams}});
       }else{
         setshowuseAppModalMessage("Unknown Error - " + response.data.message);
@@ -342,6 +365,10 @@ export const useApp = () => {
     setStateName,
     setproductCategories,
     productCategories,
+    setHomeTypes,
+    homeTypes,
+    setHomeType,
+    homeType,
     resultBox,
     resultMessage,
     handleCloseModal,

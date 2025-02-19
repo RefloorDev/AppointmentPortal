@@ -2,8 +2,7 @@
   "name": "booking",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://dev.myx.ac",
-  "homepage": "https://dev.myx.ac/scheduler",
+  "homepage": "https://schedule.refloor.com",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",

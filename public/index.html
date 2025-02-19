@@ -33,15 +33,22 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
   
     <div id="root"></div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXtuHWBP0hJufjgDKfklVXb4f-7csKldw&libraries=places"></script>
+     <!-- Define the callback function for the Maps API -->
+     <script>
+      function initMap() {
+        // Initialize your map or perform other actions here
+        console.log('Google Maps API loaded!');
+      }
+    </script>
+    <script async
+    defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFOfOMMomcMNMVEaI3EHNtNdcvvVMNvb4&libraries=places&callback=initMap"></script>
 
     <!--
       From mike - AIzaSyDs34p4tY1C_CqnQLv1Eke66Js-Wj5J1lk, AIzaSyBU1DxCsJ4qSqcSO9noxlpfvzcS5wJumvk
-      mrank - AIzaSyDXtuHWBP0hJufjgDKfklVXb4f-7csKldw
-      This HTML file is a template.
-      test - AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg
-      If you open it directly in the browser, you will see an empty page.
 
+      mrank - new AIzaSyBFOfOMMomcMNMVEaI3EHNtNdcvvVMNvb4
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
       You can add webfonts, meta tags, or analytics to this file.
       The build step will place the bundled scripts into the <body> tag.
 

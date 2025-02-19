@@ -16,7 +16,6 @@ const getToken = async () => {
           },
         }
       );
-      console.log(response)
       if (response.status === 200) {
         return response.data.access_token;
       }

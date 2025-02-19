@@ -1,0 +1,20 @@
+For dev:
+xScheduleEnvironment: 'sandbox',
+For prod remove this:
+
+change this in package.json:
+"homepage": "https://dev.myx.ac/scheduler",
+"proxy": "https://dev.myx.ac",
+
+Add this in index.json:
+<Router basename="scheduler">
+
+For prod:
+change this in package.json:
+"homepage": "https://schedule.refloor.com"
+
+Remove this in index.js:
+<Router basename="scheduler">
+
+Remove in package.json:
+"proxy": "https://dev.myx.ac",

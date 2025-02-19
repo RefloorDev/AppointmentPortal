@@ -40,8 +40,6 @@ useState({
   // const clientMessage = location.message;
   
   useEffect(() => {
-    console.log(response);
-    console.log(clientMessage);
     //
     
     if(response === undefined){
@@ -57,9 +55,7 @@ useState({
     // Sort the array based on the compareDateTime function
     const sortedData = dataFromServer.sort(compareDateTime);
     //
-    console.log(sortedData);
-    const bookingDates = [...new Set(sortedData.map((item) => item.date))].slice(0, 5);;
-    console.log("Uniquie data: ",bookingDates);
+    const bookingDates = [...new Set(sortedData.map((item) => item.date))].slice(0, 5);
     //Filter data for the first 5 unique dates
     const filteredData = sortedData.filter(item => bookingDates.slice(0, 5).includes(item.date));
     
@@ -69,7 +65,6 @@ useState({
     setAppointment(bookingDates[0]);
     //
     //check the default
-    console.log(bookingDates[0])
     //setAppointment(selected);
       // const slots = filteredData.filter((item) => {
       //   if (item.date === bookingDates[0]) {
@@ -88,11 +83,9 @@ useState({
       setAppointment(selected);
       const slots = bookingSlots.filter((item) => {
         if (item.date === selected) {
-          console.log(item.time)
           return item.time;
         }
       });
-      console.log(slots)
       setAvailableSlots(slots);
       setSelectedSlot("");
     } else {
@@ -131,29 +124,24 @@ useState({
             city: locDetails.City,
             state: locDetails.State,
             zip: locDetails.Zip,
-            comments:clientMessage
+            comments:clientMessage,
           },
         };
         let apiservice = await getApiService();
         if(apiservice === null){
           const token = await getToken();
-          console.log(token);
           const service = await startService(
             token,
             "https://refloor.logicdrop.cloud/endpoints/scheduler/api"
           );
-          console.log(service)
           apiservice = service;          
         }
-        console.log(scheduleRequest);
-        console.log(apiservice)
         const responseAppointment = await apiservice.scheduleResourceScheduleAppointment(scheduleRequest
           ,
           {params:_QueryParams}
           // {params: {utm_campaign:UTM_Cam }}
         );
-        setDataLoading(false);
-        console.log(responseAppointment)        
+        setDataLoading(false);       
         //catch the errors and success response and navigate back to main page on showing the data in the modal
         if (responseAppointment.data.code === 400) {
           setResultMessage({name: "", address: "", email: "",time_: "",date_:"", message: "Bad Request - " + responseAppointment.data.message, message2:""});
@@ -174,7 +162,9 @@ useState({
         else if (responseAppointment?.status && responseAppointment.status === 200) {
           //get the existing appointment data and available slots
           const selected_ = moment(selectedSlot.date).format("dddd, MMMM Do YYYY");
-          setResultMessage({name: firstName+" "+lastName, address: locDetails.Address+", "+locDetails.City+", "+locDetails.State+" - "+locDetails.Zip, email: email,time_: selectedSlot.time,date_:selected_, message: "Your appointment with Refloor is scheduled!", message2:"You will receive an email and text message confirmation shortly."});
+          setResultMessage({name: firstName+" "+lastName, address: locDetails.Address+", "+locDetails.City+", "+locDetails.State+" - "+locDetails.Zip, email: email,time_: selectedSlot.time,date_:selected_, message: "your appointment request is awaiting confirmation for", message2:"Your appointment is NOT CONFIRMED until you answer our call and speak with our agent to review your appointment details."});
+
+          //setResultMessage({name: firstName+" "+lastName, address: locDetails.Address+", "+locDetails.City+", "+locDetails.State+" - "+locDetails.Zip, email: email,time_: selectedSlot.time,date_:selected_, message: "Your appointment with Refloor is scheduled!", message2:"You will receive an email and text message confirmation shortly."});
           setResultBox(true);
         }else{
           setResultMessage({name: "", address: "", email: "",time_: "",date_:"", message: "Unknown - " + responseAppointment.data.message, message2:""});

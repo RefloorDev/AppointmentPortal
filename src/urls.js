@@ -1,4 +1,4 @@
-export const UrlsProd = {
+export const Urls = {
   GET_BOOKING_SLOTS:
     "https://myx.ac/I360/GetAvailableSlotsByMarket/refloor_auth=cmVmbG9vcmxsYy1XSDhaQjcuNjRXS09EOjE2MDczZmQ1LTE4M2QtNDQzNS04MTZjLWFhMGVmODNlY2ZkYw==?marketSegment={state}",
   
@@ -15,10 +15,13 @@ export const UrlsProd = {
     "https://myx.ac/I360/GetProspectInfo/refloor_auth=cmVmbG9vcmxsYy1XSDhaQjcuNjRXS09EOjE2MDczZmQ1LTE4M2QtNDQzNS04MTZjLWFhMGVmODNlY2ZkYw==?",
 
   GET_ProdcutCategories:
-    "https://myx.ac/I360/GetProductCategories/refloor_auth=cmVmbG9vcmxsYy1XSDhaQjcuNjRXS09EOjE2MDczZmQ1LTE4M2QtNDQzNS04MTZjLWFhMGVmODNlY2ZkYw==?"
+    "https://myx.ac/I360/GetProductCategories/refloor_auth=cmVmbG9vcmxsYy1XSDhaQjcuNjRXS09EOjE2MDczZmQ1LTE4M2QtNDQzNS04MTZjLWFhMGVmODNlY2ZkYw==?",
+
+  GET_GetHomeTypes:
+    "https://myx.ac/I360/GetHomeTypes/refloor_auth=cmVmbG9vcmxsYy1XSDhaQjcuNjRXS09EOjE2MDczZmQ1LTE4M2QtNDQzNS04MTZjLWFhMGVmODNlY2ZkYw==?"
 
 };
-export const Urls= {
+export const UrlsDev= {
   GET_BOOKING_SLOTS:
     "https://dev.myx.ac/I360/GetAvailableSlotsByMarket/refloor_auth=cmVmbG9vcmxsYy1XSDhaQjcuNjRXS09EOjE2MDczZmQ1LTE4M2QtNDQzNS04MTZjLWFhMGVmODNlY2ZkYw==?instance=sandbox&marketSegment={state}",
   
@@ -35,15 +38,10 @@ export const Urls= {
     "https://dev.myx.ac/I360/GetProspectInfo/refloor_auth=cmVmbG9vcmxsYy1XSDhaQjcuNjRXS09EOjE2MDczZmQ1LTE4M2QtNDQzNS04MTZjLWFhMGVmODNlY2ZkYw==?instance=sandbox&",
 
   GET_ProdcutCategories:
-    "https://dev.myx.ac/I360/GetProductCategories/refloor_auth=cmVmbG9vcmxsYy1XSDhaQjcuNjRXS09EOjE2MDczZmQ1LTE4M2QtNDQzNS04MTZjLWFhMGVmODNlY2ZkYw==?instance=sandbox"
+    "https://dev.myx.ac/I360/GetProductCategories/refloor_auth=cmVmbG9vcmxsYy1XSDhaQjcuNjRXS09EOjE2MDczZmQ1LTE4M2QtNDQzNS04MTZjLWFhMGVmODNlY2ZkYw==?instance=sandbox",
+   
+  GET_GetHomeTypes:
+    "https://dev.myx.ac/I360/GetHomeTypes/refloor_auth=cmVmbG9vcmxsYy1XSDhaQjcuNjRXS09EOjE2MDczZmQ1LTE4M2QtNDQzNS04MTZjLWFhMGVmODNlY2ZkYw==?instance=sandbox"
+
 };
-// "homepage": "https://dev.myx.ac/scheduler",
-//"proxy": "https://dev.myx.ac", 
-//"homepage": "https://schedule.refloor.com", https://schedule.refloor.com
-//src/index.js
 
-//"homepage": "https://schedule.refloor.com",
-
-// "proxy": "https://dev.myx.ac",
-// "homepage": "https://dev.myx.ac/scheduler",
-// <Router basename="scheduler">

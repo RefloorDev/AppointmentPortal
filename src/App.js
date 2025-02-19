@@ -27,6 +27,8 @@ export const App = () => {
     q1,
     q2,
     q3,
+    homeType,
+    homeTypes,
     setAddress,
     setCity,
     setEmail,
@@ -39,6 +41,7 @@ export const App = () => {
     setQ3,
     setSpouse,
     setZip,
+    setHomeType,
     spouse,
     zip,
     handleChange,
@@ -61,7 +64,6 @@ export const App = () => {
   const [readOnlyZip, setReadOnlyZip] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   useEffect(() => {
-    console.log(window.google);
     // autoCompleteRef.current = new window.google.maps.places.Autocomplete(
     //   inputRef.current,
     //   { types: ["(cities)"], componentRestrictions: { country: "us" } }
@@ -125,6 +127,8 @@ export const App = () => {
 
   return (
     <>
+   
+
       {dataLoading ? <DataLoading /> : null}
 
       <div style={{ display: resultBox ? "flex" : "none" }} className="modal">
@@ -219,6 +223,8 @@ export const App = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                maxWidth: "100%",
+              width: "400px",
               }}
             >
               <div
@@ -587,7 +593,7 @@ export const App = () => {
                 </div> */}
 
                 <div className="row" style={{ marginTop: 10 }}>
-                  <div className="col-lg-6">
+                  <div className="col-lg-4">
                     <div className="form-group">
                       <label>Are you the homeowner?</label>
                       <span style={{ color: "red" }}>*</span>
@@ -603,7 +609,26 @@ export const App = () => {
                       </select>
                     </div>
                   </div>
-                  <div className="col-lg-6">
+                  <div className="col-lg-4">
+                    <div className="form-group">
+                      <label>Select Home Type</label>
+                      <span style={{ color: "red" }}>*</span>
+                      <select
+                        name="hometype"
+                        className="form-control"
+                        required
+                        value={homeType}
+                        onChange={(e) => setHomeType(e.target.value)}
+                      >
+                      {homeTypes.map((option, index) => (
+                        <option key={index} value={option.valueName}>
+                          {option.label}
+                        </option>
+                      ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col-lg-4">
                     <div className="form-group">
                       <label>
                         What rooms are you interested in reflooring?
