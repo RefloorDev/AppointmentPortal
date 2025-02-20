@@ -162,7 +162,7 @@ useState({
         else if (responseAppointment?.status && responseAppointment.status === 200) {
           //get the existing appointment data and available slots
           const selected_ = moment(selectedSlot.date).format("dddd, MMMM Do YYYY");
-          setResultMessage({name: firstName+" "+lastName, address: locDetails.Address+", "+locDetails.City+", "+locDetails.State+" - "+locDetails.Zip, email: email,time_: selectedSlot.time,date_:selected_, message: "your appointment request is awaiting confirmation for", message2:"Your appointment is NOT CONFIRMED until you answer our call and speak with our agent to review your appointment details."});
+          setResultMessage({name: firstName, address: locDetails.Address+", "+locDetails.City+", "+locDetails.State+" - "+locDetails.Zip, email: email,time_: selectedSlot.time,date_:selected_, message: "your appointment request is awaiting confirmation for", message2:"Your appointment is NOT CONFIRMED until you answer our call and speak with our agent to review your appointment details."});
 
           //setResultMessage({name: firstName+" "+lastName, address: locDetails.Address+", "+locDetails.City+", "+locDetails.State+" - "+locDetails.Zip, email: email,time_: selectedSlot.time,date_:selected_, message: "Your appointment with Refloor is scheduled!", message2:"You will receive an email and text message confirmation shortly."});
           setResultBox(true);

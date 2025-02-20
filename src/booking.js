@@ -174,13 +174,13 @@ export const Booking = () => {
               </div> */}
               {/* <div style={{border: "2px solid black",padding:20}}> */}
                 {(resultMessage.message && resultMessage.name) !== ""? (
-                  <div className="row" style={{textAlign:"center"}}>
+                  <div className="row">
                   <div className="modal-text"><FcOk/>&nbsp;{resultMessage.name+", "+resultMessage.message}</div>
                   </div>
                 ):null}
                 {resultMessage.date_ !== ""? (
                   <div className="row" style={{
-                        marginTop: 10
+                        marginTop: 0
                       }}>
                   <div className="modal-text"><SlCalender />&nbsp;{resultMessage.date_}</div>
                   </div>
@@ -199,8 +199,9 @@ export const Booking = () => {
                 ):null}
                 
                {resultMessage.message2 !== ""? (
-                <div className="row">
-                <div className="modal-text">&nbsp;{resultMessage.message2}</div>
+                <div className="row" style={{textAlign:"center"}}>
+                <div className="modal-text">{resultMessage.message2}</div>
+                <div className="modal-text" style={{textAlign:'center'}}>Thank you!</div>
                 </div>
                ):null}
               {/* </div> */}
